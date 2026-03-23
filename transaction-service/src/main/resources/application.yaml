@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: TRANSACTION-SERVICE
+  datasource:
+    url: jdbc:mysql://localhost:3306/bankSysTransactionService?createDatabaseIfNotExist=true
+    username: root
+    password: Nikhil@123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    jpa:
+      hibernate:
+        ddl-auto: update
+
+server:
+  port: 8084
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    preferIpAddress: true
+    IpAddress: 127.0.0.1
+    instance-id: TRANSACTION-SERVICE:${server.port}

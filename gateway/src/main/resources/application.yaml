@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: GATEWAY
+
+  cloud:
+    gateway:
+      routes:
+
+        - id: auth-service
+          uri: lb://AUTH-SERVICE
+          predicates:
+            - Path=/auth/**
+
+        - id: account-service
+          uri: lb://ACCOUNT-SERVICE
+          predicates:
+            - Path=/accounts/**
+
+        - id: transaction-service
+          uri: lb://TRANSACTION-SERVICE
+          predicates:
+            - Path=/transactions/**
+
+        - id: customer-service
+          uri: lb://CUSTOMER-SERVICE
+          predicates:
+            - Path=/customers/**
+
+jwt:
+  secret: ${JWT_SECRET}
+
+server:
+  port: 8080
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    preferIpAddress: true
+    IpAddress: 127.0.0.1
+    instance-id: GATEWAY:${server.port}
