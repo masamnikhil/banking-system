@@ -1,6 +1,9 @@
 package com.bankingsys.gateway.config;
 
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.http.HttpStatus;
@@ -10,10 +13,12 @@ import reactor.core.publisher.Mono;
 
 @Component
 @RequiredArgsConstructor
-public class GatewayFilter implements GlobalFilter {
+public class GatewayAuthFilter implements GlobalFilter {
 
     private final RouteValidator routeValidator;
     private final JwtUtil jwtUtil;
+
+    static final Logger logger = LoggerFactory.getLogger(GatewayAuthFilter.class);
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {

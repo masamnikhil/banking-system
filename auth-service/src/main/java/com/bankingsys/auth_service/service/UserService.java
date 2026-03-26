@@ -10,5 +10,5 @@ import java.util.Map;
 public interface UserService {
 
     Map<String, String> register(RegisterRequest registerRequest);
-    String login(LoginRequest loginRequest);
+    Map<String, String> login(LoginRequest loginRequest);
 }

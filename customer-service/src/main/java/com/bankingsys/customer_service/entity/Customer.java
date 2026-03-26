@@ -2,19 +2,19 @@ package com.bankingsys.customer_service.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(name = "customers")
-public class Customer {
+public class Customer extends Auditable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -24,6 +24,7 @@ public class Customer {
     private String email;
     private String phoneNumber;
     private LocalDate dateOfBirth;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    @Column(nullable = false)
+    private UUID userId;
+
 }

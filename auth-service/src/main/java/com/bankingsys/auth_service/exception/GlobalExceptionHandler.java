@@ -1,5 +1,8 @@
 package com.bankingsys.auth_service.exception;
 
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -25,6 +28,17 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(errors);
     }
 
+    @ExceptionHandler(EntityExistsException.class)
+    public ResponseEntity<String> handleInvalidFormat(EntityExistsException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<String> handleUserNotFound(EntityNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<Map<String, String>> handleInvalidFormat(HttpMessageNotReadableException ex) {
         Map<String, String> error = Map.of(
@@ -32,5 +46,19 @@ public class GlobalExceptionHandler {
                 "message", "follow yyyy-MM-dd"
         );
         return ResponseEntity.badRequest().body(error);
+    }
+
+    @ExceptionHandler(CustomerServiceException.class)
+    public ResponseEntity<String> handleCustomerServiceException(CustomerServiceException ex){
+        return ResponseEntity
+                .status(409)
+                .body(ex.getMessage());
+    }
+
+    @ExceptionHandler(UserAuthenticationException.class)
+    public ResponseEntity<String> handleCustomerServiceException(UserAuthenticationException ex){
+        return ResponseEntity
+                .status(401)
+                .body(ex.getMessage());
     }
 }

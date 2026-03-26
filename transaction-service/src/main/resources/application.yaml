@@ -2,9 +2,9 @@ spring:
   application:
     name: TRANSACTION-SERVICE
   datasource:
-    url: jdbc:mysql://localhost:3306/bankSysTransactionService?createDatabaseIfNotExist=true
-    username: root
-    password: Nikhil@123
+    url: jdbc:mysql://localhost:3306/{DB_NAME}?createDatabaseIfNotExist=true
+    username: {DB_USER}
+    password: {DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
     jpa:
       hibernate:
@@ -12,6 +12,9 @@ spring:
 
 server:
   port: 8084
+
+jwt:
+  secret: ${JWT_SECRET}
 
 eureka:
   client:

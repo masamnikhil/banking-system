@@ -14,7 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "accounts")
-public class Account {
+public class Account extends Auditable{
 
     private UUID id;
     private String accountNumber;
@@ -23,6 +23,5 @@ public class Account {
     private AccountType accountType;
     private double balance;
     private Status accountStatus;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+
 }

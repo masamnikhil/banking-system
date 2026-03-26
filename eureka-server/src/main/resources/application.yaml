@@ -9,7 +9,4 @@ eureka:
   client:
     register-with-eureka: false
     fetch-registry: false
-  instance:
-    hostname: MasamNikhil
-    preferIpAddress: true
-    IpAddress: 127.0.0.1
+

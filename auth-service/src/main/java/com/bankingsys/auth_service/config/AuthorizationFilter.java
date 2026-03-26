@@ -33,12 +33,12 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 
         if (jwtUtil.validateToken(token) && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            String username = jwtUtil.extractUsername(token);
+            String userId = jwtUtil.extractUserId(token);
             String role = jwtUtil.extractRole(token);
 
             UsernamePasswordAuthenticationToken auth =
                     new UsernamePasswordAuthenticationToken(
-                            username,
+                            userId,
                             null,
                             List.of(new SimpleGrantedAuthority(role))
                     );

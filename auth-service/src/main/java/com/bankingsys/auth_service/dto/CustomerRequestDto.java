@@ -6,13 +6,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserRequestEvent {
+public class CustomerRequestDto {
 
+    private UUID userId;
     private String firstName;
     private String lastName;
     private String email;

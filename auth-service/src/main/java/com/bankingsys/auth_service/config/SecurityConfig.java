@@ -20,7 +20,7 @@ public class SecurityConfig {
     public  SecurityFilterChain securityFilterChain(HttpSecurity http){
         http
                 .csrf(crsf -> crsf.disable())
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/register", "/login").permitAll()
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/auth/register", "/auth/login").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class)
