@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
             throw new EntityExistsException("username already exists");
 
         User saveUser = User.builder().username(registerRequest.getUsername()).password(passwordEncoder.encode(registerRequest.getPassword()))
-                .role(Role.ROLE_CUSTOMER).build();
+                .role(registerRequest.getEmail().endsWith("@bank.com") ? Role.ROLE_MANAGER : Role.ROLE_CUSTOMER).build();
 
         User savedUser = userRepository.saveAndFlush(saveUser);
         CustomerRequestDto userRequestDto = CustomerRequestDto.builder().userId(savedUser.getId()).email(registerRequest.getEmail())

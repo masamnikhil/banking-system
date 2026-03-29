@@ -15,7 +15,7 @@ public class AccountRequest {
 
     private String userId;
     private String accountType;
-    private double balance;
     private String accountStatus;
+    private String branchName;
 
 }

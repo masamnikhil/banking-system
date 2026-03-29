@@ -15,5 +15,5 @@ public class BranchRequest {
     private String branchCode;
     private String branchName;
     private String city;
-    private String ifsCode;
+    private String ifscCode;
 }

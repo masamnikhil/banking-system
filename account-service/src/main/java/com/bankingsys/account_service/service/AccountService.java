@@ -6,5 +6,5 @@ import org.springframework.stereotype.Service;
 @Service
 public interface AccountService {
 
-    String createAccount(AccountRequest request);
+    boolean createAccount(AccountRequest request);
 }

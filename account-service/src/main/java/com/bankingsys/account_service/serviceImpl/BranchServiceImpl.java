@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -21,11 +22,21 @@ public class BranchServiceImpl implements BranchService {
         try {
             List<Branch> branches = branchList.stream().map(branchRequest -> Branch.builder()
                     .branchCode(branchRequest.getBranchCode()).branchName(branchRequest.getBranchName())
-                    .city(branchRequest.getCity()).ifsCode(branchRequest.getIfsCode()).build()).toList();
+                    .city(branchRequest.getCity()).ifsCode(branchRequest.getIfscCode()).build()).toList();
             branchRepository.saveAll(branches);
             return true;
         } catch (RuntimeException e) {
             throw new RuntimeException();
         }
     }
+
+    @Override
+    public Branch getBranchByName(String name) {
+        Optional<Branch> branch = branchRepository.findByBranchName(name);
+        if(branch.isPresent())
+            return branch.get();
+        return null;
+    }
+
+
 }
