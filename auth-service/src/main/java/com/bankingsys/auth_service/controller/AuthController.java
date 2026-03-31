@@ -2,6 +2,7 @@ package com.bankingsys.auth_service.controller;
 
 import com.bankingsys.auth_service.dto.LoginRequest;
 import com.bankingsys.auth_service.dto.RegisterRequest;
+import com.bankingsys.auth_service.dto.UserRequest;
 import com.bankingsys.auth_service.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -31,5 +32,12 @@ public class AuthController {
     public ResponseEntity<Map<String, String>> authenticate(@RequestBody LoginRequest loginRequest){
         Map<String, String> response = userService.login(loginRequest);
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/verify")
+    public ResponseEntity<HttpStatus> verifyProfilePassword(@RequestBody UserRequest request){
+        if(userService.verifyPassword(request))
+            return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

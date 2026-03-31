@@ -61,4 +61,14 @@ public class GlobalExceptionHandler {
                 .status(401)
                 .body(ex.getMessage());
     }
+
+    @ExceptionHandler(ProfilePasswordNotFoundException.class)
+    public ResponseEntity<HttpStatus> handlePasswordNotFound(ProfilePasswordNotFoundException ex){
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(VerificationFailedException.class)
+    public ResponseEntity<HttpStatus> handleVerificationException(VerificationFailedException ex){
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
 }

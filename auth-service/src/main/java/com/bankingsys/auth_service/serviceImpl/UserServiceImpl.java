@@ -4,15 +4,19 @@ import com.bankingsys.auth_service.config.JwtUtil;
 import com.bankingsys.auth_service.dto.CustomerRequestDto;
 import com.bankingsys.auth_service.dto.LoginRequest;
 import com.bankingsys.auth_service.dto.RegisterRequest;
+import com.bankingsys.auth_service.dto.UserRequest;
 import com.bankingsys.auth_service.entity.Role;
 import com.bankingsys.auth_service.entity.User;
 import com.bankingsys.auth_service.exception.CustomerServiceException;
+import com.bankingsys.auth_service.exception.ProfilePasswordNotFoundException;
 import com.bankingsys.auth_service.exception.UserAuthenticationException;
+import com.bankingsys.auth_service.exception.VerificationFailedException;
 import com.bankingsys.auth_service.feignclient.CustomerClient;
 import com.bankingsys.auth_service.repository.UserRepository;
 import com.bankingsys.auth_service.service.UserService;
 import feign.FeignException;
 import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +30,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -99,5 +104,22 @@ public class UserServiceImpl implements UserService {
             }
             throw new UserAuthenticationException(message);
         }
+    }
+
+    @Override
+    public boolean verifyPassword(UserRequest request){
+
+        User user = userRepository.findById(UUID.fromString(request.getUserId()))
+                .orElseThrow(() -> new EntityNotFoundException("user not found"));
+
+        if(user.getProfilePassword() == null)
+            throw new ProfilePasswordNotFoundException("");
+
+            boolean verification = passwordEncoder.matches(request.getProfilePassword(), user.getProfilePassword());
+
+            if(!verification)
+                throw new VerificationFailedException("");
+
+        return true;
     }
 }

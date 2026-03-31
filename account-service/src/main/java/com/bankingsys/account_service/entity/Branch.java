@@ -19,12 +19,12 @@ public class Branch {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String branchCode;
     @Column(nullable = false)
     private String branchName;
     @Column(nullable = false)
     private String city;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String ifsCode;
 }
